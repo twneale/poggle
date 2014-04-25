@@ -2,30 +2,24 @@
 Django settings for poggle project.
 
 For more information on this file, see
-https://docs.djangoproject.com/en/1.6/topics/settings/
+https://docs.djtsangoproject.com/en/1.6/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+from os import path, environ as environ
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
+BASE_DIR = path.join(path.dirname(__file__), '..', '..')
+DEBUG = False
+SECRET_KEY = env['DJANGO_SECRET_KEY']
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'nl1yq6-8#35sc26ma)2pwvcyle+yo!@9az#m4$8*z(7rv3!lnh'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-TEMPLATE_DEBUG = True
-
-ALLOWED_HOSTS = []
-
+TEMPLATE_DEBUG = DEBUG
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates')
+)
 
 # Application definition
 
@@ -36,6 +30,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'frontend',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -61,6 +56,10 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+REDIS_HOST = env['REDIS_HOST']
+REDIS_PORT = env['REDIS_PORT']
+REDIS_PASSWORD = env['REDIS_PASSWORD']
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
